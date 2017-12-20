@@ -7,8 +7,8 @@ $(document).ready(function() {
 
 
     var URL = "https://api.edamam.com/search?";
-    var apiKey = "app_key=bb6760c1841801cc559cf31d43145900&";
-    var appID = "app_id=6a2a24ba&";
+    var apiKey = "app_key=995949774bfd326ffc014061f6b2e523&";
+    var appID = "app_id=11c5a69a&";
     var q = "q=chicken";
     var queryURL = URL+apiKey+appID+q;
     console.log(queryURL);
