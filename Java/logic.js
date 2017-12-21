@@ -20,15 +20,6 @@ var config = {
 
   //intial Valiues 
 
-var name ="";
-
-var calories = 0;
-
-var carbs = 0;
-
-var fats = 0;
-
-var proteins = 0;
 
 //submit buttin starts function 
 
@@ -38,17 +29,17 @@ $('.button-1').on("click", function (event) {
 
   event.preventDefault();
 
-name = $("#user-name").val().trim();
-calories = $("#calories").val().trim();
-carbs = $("#carb-input").val().trim();
-fats = $("fats").val().trim();
-proteins = $("proteins").val().trim();
+var name = $("#user-name").val().trim();
+var calories = $("#calorie-input").val().trim();
+var carbs = $("#carb-input").val().trim();
+var fats = $("#fat-input").val().trim();
+var proteins = $("#protein-input").val().trim();
 
 
 
   database.ref().set({
     name: name,
-    weight: weight,
+    carbs: carbs,
     calories: calories,
     proteins: proteins,
     fats: fats
