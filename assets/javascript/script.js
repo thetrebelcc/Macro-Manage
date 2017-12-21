@@ -12,7 +12,6 @@ $(document).ready(function() {
     var q = "q=chicken";
     var queryURL = URL+apiKey+appID+q;
     console.log(queryURL);
-
     $.ajax({
         url: queryURL,
         method: "GET"
