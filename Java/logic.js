@@ -2,7 +2,7 @@
 
 
 
-
+$(function(){
 
 var config = {
     apiKey: "AIzaSyCniYS4oBy2IDE6UAq80fgX0JDJqElXcQ4",
@@ -15,49 +15,66 @@ var config = {
   firebase.initializeApp(config);
 
 //variabler for the databasse 
-  var datebase = firebase.database();
+  var database = firebase.database();
 
 
   //intial Valiues 
 
 var name ="";
 
-var weight = 0;
-
 var calories = 0;
 
-var protein = 0;
+var carbs = 0;
 
 var fats = 0;
 
+var proteins = 0;
+
 //submit buttin starts function 
 
-$("button").on("click"), function () {
+$('.button-1').on("click", function (event) {
 
-  event.preventDefualt();
+  console.log("clicked");
 
-  name = $("#name").val().trim();
-  weight = $("#weight").val().trim();
-  calories = $("#calories").val().trim();
-  proteins = $("proteins").val().trim();
-  fats = $("fats").val().trim();
+  event.preventDefault();
+
+name = $("#user-name").val().trim();
+calories = $("#calories").val().trim();
+carbs = $("#carb-input").val().trim();
+fats = $("fats").val().trim();
+proteins = $("proteins").val().trim();
+
+
 
   database.ref().set({
     name: name,
     weight: weight,
     calories: calories,
     proteins: proteins,
-    fats: fats,
+    fats: fats
 
-  })
+  });
 
-};
+});
 
-
-
-
-        console.log(snapshot.val().name);
+});
 
 
+ // database.on("value")
+ //    database.ref().on("value", function(snapshot) {
+
+ //      // Log everything that's coming out of snapshot
+ //      console.log(snapshot.val());
+ //      console.log(snapshot.val().name);
+ //      console.log(snapshot.val().weight);
+ //      console.log(snapshot.val().calories);
+ //      console.log(snapshot.val().proteins);
+ //      console.log(snapshot.val().fats);
+
+    
+ //      // Handle the errors
+ //    }, function(errorObject) {
+ //      console.log("Errors handled: " + errorObject.code);
+ //    });
 
 
