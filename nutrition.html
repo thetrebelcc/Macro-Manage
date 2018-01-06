@@ -124,7 +124,7 @@
 
     // });
 
-    $(document).click(".List", function(obj) {
+    $('#ingredientList').click(".List", function(obj) {
       console.log(obj.target);
       $(obj.target).children().toggle("blind");
     });
@@ -192,13 +192,17 @@
   // var carName = $(this).attr("data-name");
   // URL constructed
          var URL = "https://api.edamam.com/search?";
-        var apiKey = "app_key=995949774bfd326ffc014061f6b2e523&";
-        var appID = "app_id=11c5a69a&";
-        var q = "q="+typeOfProtien+"&";
-        var fat = "nutrients[FAT]=40&";
-        var carbs = "nutrients[CHOCDF]=10&";
-        var protein = "nutrients[PROCNT]=20%2B"
-        var queryURL = URL+apiKey+appID+q+carbs+fat+protein;
+         var apiKey = "app_key=db1a40953af885cd882da9927cdfe97d&";
+        var appID = "app_id=6980324b&";
+        
+//var q = "q="+typeOfProtien+"&";
+        // var q = "q=""tuna"&";
+
+        // var fat = "nutrients[FAT]=40&";
+        // var carbs = "nutrients[CHOCDF]=10&";
+        // var protein = "nutrients[PROCNT]=20%2B"
+        // var queryURL = URL+apiKey+appID+q+carbs+fat+protein;
+var queryURL = "https://api.edamam.com/search?q=tuna&app_id=6980324b&app_key=db1a40953af885cd882da9927cdfe97d&from=0&to=3&calories=gte%20591,%20lte%20722&health=alcohol-free"
 
         // console.log(queryURL);
         $.ajax({
