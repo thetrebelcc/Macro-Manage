@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>GET FIT </title>
+
+  <!-- Bootstrap -->
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="css/pepper-grinder/jquery-ui-1.10.3.custom.min.css"> -->
+
+   
+</head>
+
+<body>
+
+  <div class="container">
+
+    <br>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <h1 class="text-center">Nutrition</h1>
+    </div>
+    <div class="row">
+
+      <!-- Sign-Up Panel-->
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Enter you preferences</h3>
+          </div>
+          <div class="panel-body">
+
+            <!-- Sign-up Form (note the various input "types")-->
+            <form role="form" id="myForm">
+              <div class="form-group">
+                <label for="fat-input"> Grams of fat:</label>
+                <input class="form-control" id="fat-input" type="number">
+              </div>
+              <div class="form-group">
+                <label for="protien-input"> Grams of protien:</label>
+                <input class="form-control" id="protien-input" type="number">
+              </div>
+              <div class="form-group">
+                <label for="protien-type-input"> Type of protien:</label>
+                <input class="form-control" id="protien-type-input" type="text">
+              </div>
+              <div class="form-group">
+                <label for="carb-input">Grams of carbs:</label>
+                <input class="form-control" id="carb-input" type="number">
+              </div>
+              <!-- <div class="form-group">
+                <label for="comment-input">How did you hear about us?</label>
+                <textarea class="form-control" id="comment-input" rows="5"></textarea>
+              </div> -->
+              <button class="btn btn-default" id="get-info" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Most Recent Member Panel -->
+      <div class="col-lg-6">
+       <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Results</strong></h3>
+            </div>
+            <div class="panel-body">
+              <!-- <table class="table table-hover" id='recipe-table'> -->
+                <!-- <thead> -->
+                  <div id="ingredientList">
+                  <!-- <tr> -->
+                    <!-- <th>Fats</th> -->
+                    <!-- <th>Protien</th> -->
+                    <!-- <th>Carbahydrates</th> -->
+                    <!-- <th>Next Arrival</th> -->
+                    <!-- <th>Minutes Away</th> -->
+                  <!-- </tr> -->
+                  </div>
+                <!-- </thead> -->
+                <!-- <tbody> -->
+                <!-- </tbody> -->
+              <!-- </table> -->
+            </div>
+          </div>
+        </div>
+    </div>
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- LINK TO FIREBASE GOES HERE -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  
+  <!-- <script src="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"></script> -->
+
+   <!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
+
+  <!-- <script src = "js/jquery-1.11.0.min.js"></script>
+  <script src ="js/jquery-ui.js"></script>
+  -->
+
+  <!-- first attempt -->
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ 
+
+
+
+  <!-- Script --> 
+  <script>
+
+    // $(document).on("ready", function() {
+
+    //   $("#ingredientList").accordion();
+
+    // });
+
+    $(document).click(".List", function(obj) {
+      console.log(obj.target);
+      $(obj.target).children().toggle("blind");
+    });
+
+    //  START CODING BELOW!!
+
+    // Initialize Firebase
+
+    var config = {
+      apiKey: "AIzaSyCmirOSKW_g0BOiuVKDMkhvEIVB_libCKY",
+      authDomain: "interesting-f2e94.firebaseapp.com",
+      databaseURL: "https://interesting-f2e94.firebaseio.com",
+      projectId: "interesting-f2e94",
+      storageBucket: "interesting-f2e94.appspot.com",
+      messagingSenderId: "850128346137"
+
+    };
+
+    firebase.initializeApp(config);
+
+    // Create a variable to reference the database
+    var database = firebase.database();
+
+    //Initial Values
+    var fat = 0;
+    var protien = 0;
+    var carb = 0;
+    var typeOfProtien = "";
+    // var comment = "";
+
+    // Capture Button Click
+    $("#get-info").on("click", function() {
+      // Don't refresh the page!
+      event.preventDefault();
+
+      // YOUR TASK!!!
+
+      // Code in the logic for storing and retrieving the most recent user.
+      fat = $("#fat-input").val().trim();
+      protien = $("#protien-input").val().trim();
+      carb = $("#carb-input").val().trim();
+      typeOfProtien = $("#protien-type-input").val().trim();
+      // comment = $("#comment-input").val().trim();
+
+      // Don't forget to handle the "initial load"
+      database.ref().set({
+        fat: fat,
+        protien: protien,
+        carb: carb,
+        type:typeOfProtien
+        // comment: comment
+      });
+
+      
+      displayRecipe();
+
+
+
+      document.getElementById("myForm").reset();
+
+    });
+
+    function displayRecipe(){
+  // ??????????????????????????????????????????????
+  // var carName = $(this).attr("data-name");
+  // URL constructed
+         var URL = "https://api.edamam.com/search?";
+        var apiKey = "app_key=995949774bfd326ffc014061f6b2e523&";
+        var appID = "app_id=11c5a69a&";
+        var q = "q="+typeOfProtien+"&";
+        var fat = "nutrients[FAT]=40&";
+        var carbs = "nutrients[CHOCDF]=10&";
+        var protein = "nutrients[PROCNT]=20%2B"
+        var queryURL = URL+apiKey+appID+q+carbs+fat+protein;
+
+        // console.log(queryURL);
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+            //store all of the retreved data inside of a object called "response"
+          }).done(function(response) {
+            console.log(response);
+
+            $("#ingredientList").empty();
+
+            for (var i = 0; i<response.hits.length; i++) {
+
+               //var carbAmt = response.hits[i].recipe.totalDaily.CHOCDF.quantity;
+               //console.log(carbAmt);
+
+              var recipeDiv = $("<ul>");
+              
+               // recipeDiv.addClass('');
+               recipeDiv.attr("class", "List");
+
+              //   // for(y=0;y<response.data.length; y++){
+
+              //     // var url = response.data[y].images.fixed_height_still.url;
+                 
+              //     //element to hold the image
+                  // var recipe = $("<td>");
+
+              //     recipie.attr("src", url);
+
+              //     recipie.attr("id",y);
+                  
+              //     // recipie.attr("data-state", "still");
+
+              //     // recipie.attr("data-still", url);
+
+              //     // recipie.attr("data-animate",response.data[y].images.fixed_height.url);
+
+              //     //rating display
+                  var label = response.hits[i].recipe.label;
+
+                  var labels = $("<h3>").text("label: " + label);
+
+                  var ingredients = response.hits[i].recipe.ingredientLines;
+
+                  var foodList = $("<li>").text( "ingredients: " + ingredients);
+
+                  foodList.attr("class", "toggle");
+                  foodList.attr("style", "display: none;");
+                  
+
+                  // var carbohydrates = response.hits[i].recipe.totalDaily.CHOCDF;
+
+                  // var carbStats = $("<p>").text( "carbohydrates: " + carbohydrates);
+
+              //     //still image display
+              //     // var stillImage = $("<input>").attr("type", "hidden");
+
+              //     // stillImage.val(url);
+
+              //     // stillImage.attr("id", "stillImage"+y);
+
+
+              //     // var gifImage = $("<input>").attr("type", "hidden");
+
+              //     // gifImage.val(response.data[y].images.fixed_height.url);
+
+              //     // gifImage.attr("id","gifImage"+y);
+
+                  recipeDiv.append(label);
+                  recipeDiv.append(foodList);
+              //     // carDiv.append(image);
+              //     // carDiv.append(gifImage);
+              //     // carDiv.append(stillImage);
+
+                  $("#ingredientList").prepend(recipeDiv);
+
+
+            }
+
+          });
+        
+       
+          
+         
+        //  }
+         
+       // });
+
+
+
+}
+
+
+    // Create Firebase "watcher" Hint: .on("value")
+    database.ref().on("value" , function(snapshot) {
+
+      //Log everything that's comming out of snapshot
+      // console.log("here", snapshot);
+      console.log(snapshot.val());
+      console.log(snapshot.val().fat);
+      console.log(snapshot.val().protien);
+      console.log(snapshot.val().carb);
+      // console.log(snapshot.val().comment);
+
+      //change the html to reflect
+      // $("#fat-display").text(snapshot.val().fat);
+      // $("#protien-display").text(snapshot.val().protien);
+      // $("#carb-display").text(snapshot.val().carb);
+      // $("#comment-display").text(snapshot.val().comment);
+       
+
+      // $("#train-table > tbody").append("<tr><td>" + fat + "</td><td>" + protien + "</td><td>" + carb + "</td></tr>");
+    
+    
+      // Create Error Handling
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    });
+
+    
+  </script>
+
+</body>
+</html>
