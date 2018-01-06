@@ -23,7 +23,7 @@ var config = {
 
 //submit buttin starts function 
 
-$('.button-1').on("click", function (event) {
+$('.button1').on("click", function (event) {
 
   console.log("clicked");
 
