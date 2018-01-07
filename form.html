@@ -94,7 +94,7 @@
   </div>
 
   <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
   <!-- LINK TO FIREBASE GOES HERE -->
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
@@ -109,8 +109,8 @@
   -->
 
   <!-- first attempt -->
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> 
  
 
 
@@ -192,17 +192,15 @@
   // var carName = $(this).attr("data-name");
   // URL constructed
          var URL = "https://api.edamam.com/search?";
-         var apiKey = "app_key=db1a40953af885cd882da9927cdfe97d&";
-        var appID = "app_id=6980324b&";
+         var appKey = "app_key=9d95c454489b8c62cd0f60feb02e669e&";
+         var appID = "app_id=11c5a69a&";
         
-        // var q = "q="+typeOfProtien+"&";
-
-        //  var fat = "nutrients[FAT]=40&";
-        //  var carbs = "nutrients[CHOCDF]=10&";
-        // var protein = "nutrients[PROCNT]=20%2B"
-        //  var queryURL = URL+apiKey+appID+q+carbs+fat+protein;
- var queryURL = "https://api.edamam.com/search?q=chicken&app_id=6980324b&app_key=db1a40953af885cd882da9927cdfe97d&from=0&to=3&calories=gte%20591,%20lte%20722&health=alcohol-free"
-
+         //var q = "q="+typeOfProtien+"&";
+          var q = "q=beef&";
+          var fat = "nutrients[FAT]=40&";
+          var carbs = "nutrients[CHOCDF]=10&";
+          var protein = "nutrients[PROCNT]=20%2B"
+          var queryURL = URL+q+appID+appKey+fat+carbs+protein;
         // console.log(queryURL);
         $.ajax({
             url: queryURL,
