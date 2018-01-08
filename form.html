@@ -38,22 +38,40 @@
 
             <!-- Sign-up Form (note the various input "types")-->
             <form role="form" id="myForm">
+                <p>
+                    <label for="carbs">Carb-Range:</label>
+                    <input type="text" id="carbs" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+                <div id="carb-range"></div>
+
+                <p>
+                    <label for="fats">Fat-Range:</label>
+                    <input type="text" id="fats" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+                <div id="fat-range"></div>
+
+                <p>
+                    <label for="calories">Calories-Range:</label>
+                    <input type="text" id="calories" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+                <div id="calorie-range"></div>
+
+                <p>
+                    <label for="proteins">Protein-Range:</label>
+                    <input type="text" id="proteins" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+                <div id="protein-range"></div>
+
+                  
+
               <div class="form-group">
-                <label for="fat-input"> Grams of fat:</label>
-                <input class="form-control" id="fat-input" type="number">
+                <label for="keyword-input"> Keyword 1(Example: Beef, Chicken, Pork):</label>
+                <input class="form-control" id="keyword-input" type="text">
               </div>
-              <div class="form-group">
-                <label for="protien-input"> Grams of protien:</label>
-                <input class="form-control" id="protien-input" type="number">
-              </div>
-              <div class="form-group">
-                <label for="protien-type-input"> Type of protien:</label>
-                <input class="form-control" id="protien-type-input" type="text">
-              </div>
-              <div class="form-group">
-                <label for="carb-input">Grams of carbs:</label>
-                <input class="form-control" id="carb-input" type="number">
-              </div>
+              <!-- <div class="form-group">
+                <label for="keyworkdTwo-input">Keyword 2(Example: Beef, Chicken, Pork):</label>
+                <input class="form-control" id="keywordTwo-input" type="text">
+              </div> -->
               <!-- <div class="form-group">
                 <label for="comment-input">How did you hear about us?</label>
                 <textarea class="form-control" id="comment-input" rows="5"></textarea>
@@ -118,7 +136,65 @@
   <!-- Script --> 
   <script>
 
-    // $(document).on("ready", function() {
+//$(document).on("ready", function() {
+
+$( function() {
+    $( "#carb-range" ).slider({
+      range: true,
+      min: 10,
+      max: 99,
+      values: [ 10, 30 ],
+      slide: function( event, ui ) {
+        $( "#carbs" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    $( "#carbs" ).val($( "#carb-range" ).slider( "values", 0 ) +
+      " - " + $( "#carb-range" ).slider( "values", 1 ) );
+    });
+
+$( function() {
+   $( "#fat-range" ).slider({
+      range: true,
+      min: 10,
+      max: 99,
+      values: [ 10, 30 ],
+      slide: function( event, ui ) {
+        $( "#fats" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    $( "#fats" ).val($( "#fat-range" ).slider( "values", 0 ) +
+      " - " + $( "#fat-range" ).slider( "values", 1 ) );
+    });
+
+$( function() {
+   $( "#calorie-range" ).slider({
+      range: true,
+      min: 100,
+      max: 999,
+      values: [ 100, 150 ],
+      slide: function( event, ui ) {
+        $( "#calories" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    $( "#calories" ).val($( "#calorie-range" ).slider( "values", 0 ) +
+      " - " + $( "#calorie-range" ).slider( "values", 1 ) );
+    });
+
+$( function() {
+   $( "#protein-range" ).slider({
+      range: true,
+      min: 10,
+      max: 99,
+      values: [ 10, 30 ],
+      slide: function( event, ui ) {
+        $( "#proteins" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    $( "#proteins" ).val($( "#protein-range" ).slider( "values", 0 ) +
+      " - " + $( "#protein-range" ).slider( "values", 1 ) );
+    });
+
+
 
     //   $("#ingredientList").accordion();
 
@@ -152,7 +228,6 @@
     var fat = 0;
     var protien = 0;
     var carb = 0;
-    var typeOfProtien = "";
     // var comment = "";
 
     // Capture Button Click
@@ -160,34 +235,46 @@
       // Don't refresh the page!
       event.preventDefault();
 
-      // YOUR TASK!!!
 
-      // Code in the logic for storing and retrieving the most recent user.
-      fat = $("#fat-input").val().trim();
-      protien = $("#protien-input").val().trim();
-      carb = $("#carb-input").val().trim();
-      typeOfProtien = $("#protien-type-input").val().trim();
-      // comment = $("#comment-input").val().trim();
+      //typeOfProtien = $("#protien-type-input").val().trim();
+      carbs = $("#carbs").val().trim();
+      var carbMin = carbs.substr(0,2);
+      var carbMax = carbs.substr(5,2);
+      fats = $("#fats").val().trim();
+      var fatMin = fats.substr(0,2);
+      var fatMax = fats.substr(5,2);
+      calories = $("#calories").val().trim();
+      var calorieMin = calories.substr(0,3);
+      var calorieMax = calories.substr(6,2);
+      proteins = $("#proteins").val().trim();
+      var proteinMin = proteins.substr(0,2);
+      var proteinMax = proteins.substr(5,2);
+      keyword = $("#keyword-input").val().trim();
+      //keywordTwo = $("#keywordTwo-input").val().trim();
 
-      // Don't forget to handle the "initial load"
+
       database.ref().set({
-        fat: fat,
-        protien: protien,
-        carb: carb,
-        type:typeOfProtien
+        carbMin: carbMin,
+        carbMax: carbMax,
+        calorieMin: calorieMin,
+        calorieMax: calorieMax,
+        fatMin: fatMin,
+        fatMax: fatMax,
+        proteinMin: proteinMin,
+        proteinMax: proteinMax
         // comment: comment
       });
 
       
-      displayRecipe();
+      //displayRecipe();
 
 
 
-      document.getElementById("myForm").reset();
+      //document.getElementById("myForm").reset();
 
-    });
+    //});
 
-    function displayRecipe(){
+    //function displayRecipe(){
   // ??????????????????????????????????????????????
   // var carName = $(this).attr("data-name");
   // URL constructed
@@ -196,11 +283,13 @@
          var appID = "app_id=11c5a69a&";
         
          //var q = "q="+typeOfProtien+"&";
-          var q = "q=beef&";
-          var fat = "nutrients[FAT]=40&";
-          var carbs = "nutrients[CHOCDF]=10&";
-          var protein = "nutrients[PROCNT]=20%2B"
-          var queryURL = URL+q+appID+appKey+fat+carbs+protein;
+          var q = "q="+keyword+"&";
+          //var q2 = "q="+keywordTwo+"&";
+          var Fat = "nutrients[FAT]=" + fatMax + "&";
+          var Carbs = "nutrients[CHOCDF]=" + carbMax + "&";
+          var Proteins = "nutrients[PROCNT]=" + proteinMax + "&";
+          var Calories = "nutrients[ENERC_KCAL]=" + calorieMax;
+          var queryURL = URL+q+appID+appKey+Fat+Carbs+Proteins+Calories;
         // console.log(queryURL);
         $.ajax({
             url: queryURL,
@@ -287,11 +376,11 @@
          
         //  }
          
-       // });
+        });
 
 
 
-}
+
 
 
     // Create Firebase "watcher" Hint: .on("value")
@@ -300,9 +389,9 @@
       //Log everything that's comming out of snapshot
       // console.log("here", snapshot);
       console.log(snapshot.val());
-      console.log(snapshot.val().fat);
-      console.log(snapshot.val().protien);
-      console.log(snapshot.val().carb);
+      console.log(snapshot.val().fatMax);
+      console.log(snapshot.val().proteinMax);
+      console.log(snapshot.val().carbMax);
       // console.log(snapshot.val().comment);
 
       //change the html to reflect
